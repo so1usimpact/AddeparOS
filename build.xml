@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="build" name="ox">
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="EZDB">
     <property environment="env"/>
+    <property name="Ox.location" value="../ox"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
-    <path id="ox.classpath">
+    <path id="Ox.classpath">
+        <pathelement location="${Ox.location}/bin"/>
+        <pathelement location="${Ox.location}/lib/miglayout-4.0-swing.jar"/>
+        <pathelement location="${Ox.location}/lib/gson-2.8.2.jar"/>
+        <pathelement location="${Ox.location}/lib/guava-27.0.1-jre.jar"/>
+        <pathelement location="${Ox.location}/lib/objenesis-2.1.jar"/>
+        <pathelement location="${Ox.location}/lib/slf4j-api-1.7.2.jar"/>
+        <pathelement location="${Ox.location}/lib/slf4j-simple-1.7.2.jar"/>
+    </path>
+    <path id="EZDB.classpath">
         <pathelement location="bin"/>
-        <pathelement location="lib/gson-2.8.2.jar"/>
-        <pathelement location="lib/failureaccess-1.0.1.jar"/>
-        <pathelement location="lib/guava-27.0.1-jre.jar"/>
-        <pathelement location="lib/objenesis-2.1.jar"/>
-    	<pathelement location="lib/slf4j-api-1.7.2.jar"/>
-        <pathelement location="lib/slf4j-simple-1.7.2.jar"/>
+        <pathelement location="lib/mysql-connector-java-5.1.46.jar"/>
+        <pathelement location="lib/HikariCP-2.4.7.jar"/>
+        <pathelement location="lib/javassist-3.18.2-GA.jar"/>
+        <path refid="Ox.classpath"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -24,14 +36,18 @@
     <target name="clean">
         <delete dir="bin"/>
     </target>
-    <target depends="clean" name="cleanall"/>
+    <target depends="clean" name="cleanall">
+        <ant antfile="build.xml" dir="${Ox.location}" inheritAll="false" target="clean"/>
+    </target>
     <target depends="build-subprojects,build-project" name="build"/>
-    <target name="build-subprojects"/>
+    <target name="build-subprojects">
+        <ant antfile="build.xml" dir="${Ox.location}" inheritAll="false" target="build-project"/>
+    </target>
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
-            <classpath refid="ox.classpath"/>
+            <classpath refid="EZDB.classpath"/>
         </javac>
     </target>
 </project>
